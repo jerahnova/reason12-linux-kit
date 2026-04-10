@@ -70,10 +70,6 @@ Typical use on another Linux machine:
 This repository intentionally does not redistribute:
 - Reason installers
 - licenses or entitlements
-- user account state
-- private prefixes
-- private logs
-- any bundled user-specific data
 
 ## Why This Is Not Yet A Final Bottle
 
