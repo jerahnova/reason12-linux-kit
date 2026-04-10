@@ -4,7 +4,7 @@ Do not commit the packaged Wine archive to git.
 
 Publish it as a release asset instead:
 
-- `public/wine-11.6.tar.zst`
+- `wine-11.6.tar.zst`
 
 Checksum:
 
@@ -12,12 +12,12 @@ Checksum:
 
 Recommended repo contents:
 
-- `public/README.md`
-- `public/STATE.txt`
-- `public/install-kit.sh`
-- `public/bootstrap-prefix.sh`
-- `public/export/*`
-- `public/bottle/*`
+- `README.md`
+- `STATE.txt`
+- `install-kit.sh`
+- `bootstrap-prefix.sh`
+- `export/*`
+- `bottle/*`
 - `RELEASE-ASSETS.md`
 - `SHA256SUMS`
 

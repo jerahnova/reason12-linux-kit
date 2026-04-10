@@ -1,8 +1,6 @@
-# Reason 12 Linux/Wine State
+# Reason 12 Linux/Wine Kit
 
-This directory documents the current working Reason 12 setup on this machine.
-
-This `public/` tree is the distributable side only.
+This repository documents the current share-safe Reason 12 Linux/Wine setup.
 
 Private machine/user data has been moved out to a separate non-public archive root.
 
@@ -86,14 +84,14 @@ That is enough to reproduce the non-private side of the setup on a similar machi
 
 ## Drop-In Use
 
-This public package is now usable as a drop-in kit.
+This repository is now usable as a drop-in kit.
 
 Main entry points:
 - `install-kit.sh`
 - `bootstrap-prefix.sh`
 
 Typical flow on another machine:
-1. unpack `public/`
+1. unpack the repository contents
 2. run `./install-kit.sh [target-root]`
 3. run `./bootstrap-prefix.sh [target-root]`
 4. install the official Reason 12 and Reason Companion installers into the

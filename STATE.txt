@@ -5,7 +5,7 @@ Companion wrapper: <INSTALL_ROOT>/bin/reason-companion-url-116
 Desktop shortcut: <USER_DESKTOP>/Reason 12.desktop
 Alternate desktop shortcut: <USER_DESKTOP>/Reason 12 Wine 11.desktop
 rslaunch desktop handler: <XDG_DATA_HOME>/applications/reason-companion-rslaunch.desktop
-Public package root: <PROJECT_ROOT>/public
+Project root: <PROJECT_ROOT>
 Private data root: <PRIVATE_ARCHIVE_ROOT>
 
 Approx sizes:

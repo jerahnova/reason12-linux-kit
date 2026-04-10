@@ -11,7 +11,7 @@ build/
 chroots/
 
 # Large release artifacts should not be committed to git
-public/*.tar.zst
-public/*.tar
-public/*.zip
+*.tar.zst
+*.tar
+*.zip
 
