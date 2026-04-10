@@ -15,6 +15,7 @@ if [ "${#companion_args[@]}" -eq 0 ]; then
 fi
 
 exec "$WINE_BIN" cmd /c start "" "%USERPROFILE%\\AppData\\Local\\Programs\\reason-companion-app\\Reason Companion.exe" \
-  --disable-gpu \
-  --in-process-gpu \
+  --use-angle=swiftshader \
+  --use-gl=angle \
+  --disable-gpu-sandbox \
   "${companion_args[@]}"
