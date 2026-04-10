@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Reason 12
+Exec=@INSTALL_ROOT@/bin/reason12-menufix
+Type=Application
+StartupNotify=true
+Path=@INSTALL_ROOT@
+Icon=CD07_Reason.0
+StartupWMClass=reason.exe

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+INSTALL_ROOT="${INSTALL_ROOT:-$(cd -- "${SCRIPT_DIR}/.." && pwd)}"
+
+export WINE_BIN="${WINE_BIN:-$INSTALL_ROOT/opt/wine-11.6/bin/wine}"
+export WINEPREFIX="${WINEPREFIX:-$INSTALL_ROOT/.wine-reason12-116}"
+export WINEDLLOVERRIDES="${WINEDLLOVERRIDES:-winemenubuilder.exe=d}"
+export WINEDEBUG="${WINEDEBUG:--all}"
+
+companion_args=("$@")
+if [ "${#companion_args[@]}" -eq 0 ]; then
+  companion_args=("rslaunch://ensureStarted")
+fi
+
+exec "$WINE_BIN" cmd /c start "" "%USERPROFILE%\\AppData\\Local\\Programs\\reason-companion-app\\Reason Companion.exe" \
+  --disable-gpu \
+  --in-process-gpu \
+  "${companion_args[@]}"

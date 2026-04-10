@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+INSTALL_ROOT="${INSTALL_ROOT:-$(cd -- "${SCRIPT_DIR}/.." && pwd)}"
+BIN_DIR="${BIN_DIR:-${INSTALL_ROOT}/bin}"
+
+export WINE_BIN="${WINE_BIN:-$INSTALL_ROOT/opt/wine-11.6/bin/wine}"
+export WINEPREFIX="${WINEPREFIX:-$INSTALL_ROOT/.wine-reason12-116}"
+export WINEDLLOVERRIDES="${WINEDLLOVERRIDES:-winemenubuilder.exe=d}"
+export PULSE_LATENCY_MSEC="${PULSE_LATENCY_MSEC:-60}"
+export WINEDEBUG="${WINEDEBUG:--all}"
+
+# Clean 11.6 test path on the cloned prefix.
+"$WINE_BIN" reg add 'HKCU\Software\Wine\AppDefaults\Reason.exe\X11 Driver' /v Managed /t REG_SZ /d Y /f >/dev/null 2>&1 || true
+"$WINE_BIN" reg add 'HKCU\Software\Wine\AppDefaults\Reason.exe\X11 Driver' /v Decorated /t REG_SZ /d N /f >/dev/null 2>&1 || true
+
+nohup "$BIN_DIR/reason-companion-url-116" >/tmp/reason-companion-116.log 2>&1 &
+sleep 3
+
+win_args=()
+for arg in "$@"; do
+  if [ -e "$arg" ]; then
+    win_args+=("$("$WINE_BIN" winepath -w "$arg")")
+  else
+    win_args+=("$arg")
+  fi
+done
+
+exec "$WINE_BIN" cmd /c start "" "%ProgramFiles%\\Propellerhead\\Reason 12\\Reason.exe" "${win_args[@]}"

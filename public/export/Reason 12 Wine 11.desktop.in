@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Reason 12 Wine 11
+Comment=Launch Reason 12 with the source-built Wine 11.6 setup
+Exec=@INSTALL_ROOT@/bin/reason12-menufix
+Path=@INSTALL_ROOT@
+Icon=application-x-ms-dos-executable
+Terminal=false
+Categories=AudioVideo;Audio;Music;
+StartupNotify=true

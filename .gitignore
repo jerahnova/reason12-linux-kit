@@ -1,0 +1,17 @@
+*.log
+*.tmp
+*.swp
+*.swo
+.DS_Store
+
+# Local/private or machine-specific state
+private/
+tmp/
+build/
+chroots/
+
+# Large release artifacts should not be committed to git
+public/*.tar.zst
+public/*.tar
+public/*.zip
+

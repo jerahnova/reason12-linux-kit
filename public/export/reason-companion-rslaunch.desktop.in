@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Reason Companion URL Handler
+Comment=Handle Reason Companion rslaunch URLs
+Exec=@INSTALL_ROOT@/bin/reason-companion-url-116 %u
+Terminal=false
+NoDisplay=true
+MimeType=x-scheme-handler/rslaunch;
