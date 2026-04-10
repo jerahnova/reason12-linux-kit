@@ -10,6 +10,10 @@ This repository contains the share-safe parts of the setup:
 
 It does not include licenses, account state, private prefixes, or any Reason-owned installers.
 
+## Tested Platform
+
+This kit has been tested on Linux Mint 22.3.
+
 ## Project Status
 
 Current status: usable, but not yet polished enough to claim full end-user parity with native Windows.
