@@ -8,15 +8,14 @@ rslaunch desktop handler: <XDG_DATA_HOME>/applications/reason-companion-rslaunch
 Project root: <PROJECT_ROOT>
 Private data root: <PRIVATE_ARCHIVE_ROOT>
 
-Approx sizes:
-- wine tree: rebuilt WoW64 source runner
-
 Validated:
-- official Reason 12 installer returns success in a blank prefix
-- official Reason Companion installer returns success in a blank prefix
-- official Reason install lays down SharedResources plus stock Soundbanks
+- official Reason 12 installer succeeds in a blank prefix
+- official Reason Companion installer succeeds in a blank prefix
+- official Reason install lays down SharedResources and stock Soundbanks
+- source-built Wine 11.6 WoW64 runner is working
 
 Still unresolved:
-- misleading Companion popup
-- Companion UI not fully healthy under Wine
-- not a clean portable bottle yet
+- misleading Companion popup during some startup paths
+- Companion UI is not fully healthy under Wine
+- first-launch auth still needs stronger end-user validation
+- not a finished Bottles-native package

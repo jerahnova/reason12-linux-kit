@@ -1,30 +1,29 @@
-# Notes
+# Bottles Integration Notes
 
-## Current Local State
+## Current Situation
 
-- Bottles version: `63.2`
-- Bottles data path:
-  `~/.var/app/com.usebottles.bottles/data/bottles`
-- No managed runners are currently installed in Bottles on this machine.
+Reason 12 is currently more reliable as a host-integrated Wine setup than as a Bottles-native package.
 
-## Current Working Reason Runtime
+The working runtime still depends on:
+- a custom source-built Wine 11.6 WoW64 runner
+- launch wrappers outside Bottles
+- a host-side `rslaunch` URL handler
 
-- Runner:
-  `<INSTALL_ROOT>/opt/wine-11.6`
-- Prefix:
-  `<INSTALL_ROOT>/.wine-reason12-116`
-- Main launcher:
-  `<INSTALL_ROOT>/bin/reason12-menufix`
-- Companion wrapper:
-  `<INSTALL_ROOT>/bin/reason-companion-url-116`
-- Host `rslaunch` desktop handler:
-  `<XDG_DATA_HOME>/applications/reason-companion-rslaunch.desktop`
+Because of that, Bottles import alone is not enough to reproduce the full working setup yet.
 
-## Important Limitation
+## Reference Runtime
 
-The working setup still depends on host integration outside Bottles:
-- custom Wine tree
-- launch wrappers in `~/bin`
-- `rslaunch` URL handler on the Linux host
+- Runner: `<INSTALL_ROOT>/opt/wine-11.6`
+- Prefix: `<INSTALL_ROOT>/.wine-reason12-116`
+- Main launcher: `<INSTALL_ROOT>/bin/reason12-menufix`
+- Companion wrapper: `<INSTALL_ROOT>/bin/reason-companion-url-116`
+- Host `rslaunch` handler: `<XDG_DATA_HOME>/applications/reason-companion-rslaunch.desktop`
 
-So Bottles import is only one part of the setup.
+## Intended Bottles Direction
+
+A future Bottles-ready version should ideally provide:
+- a runner layout Bottles can consume directly
+- bottle-local startup behavior instead of host-only wrappers
+- a documented first-launch flow for Reason Companion and account handoff
+
+Until then, these files are best treated as migration aids rather than a final package format.

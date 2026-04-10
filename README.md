@@ -1,121 +1,96 @@
 # Reason 12 Linux/Wine Kit
 
-This repository documents the current share-safe Reason 12 Linux/Wine setup.
+A reusable Linux kit for running Reason 12 under a source-built Wine 11.6 WoW64 runtime.
 
-Private machine/user data has been moved out to a separate non-public archive root.
+This repository contains the share-safe parts of the setup:
+- a rebuilt Wine 11.6 WoW64 runner
+- launch scripts and desktop integration
+- install and bootstrap helpers
+- Bottles-related notes for future packaging work
 
-## Current Status
+It does not include licenses, account state, private prefixes, or any Reason-owned installers.
 
-Working:
-- Reason 12 launches under source-built `wine-11.6`
-- Main Reason UI is usable
-- `.rns` files are associated with the same launcher
-- Companion can be started in the same prefix
-- A fresh blank prefix can install both official installers successfully under the rebuilt WoW64 runner
-- The official Reason installer lays down shared resources plus the stock soundbanks needed to start Reason
+## Project Status
 
-Known issues:
-- Reason may still show a misleading Companion error even when it continues launching
-- Companion UI is not fully healthy under Wine
-- This is not yet a clean portable Bottles export
-- I would not claim "all Reason offers work" yet, especially first-launch/account/device-management paths
+Current status: usable, but not yet polished enough to claim full end-user parity with native Windows.
+
+Validated:
+- the source-built Wine 11.6 WoW64 runner works
+- a fresh blank prefix can install the official Reason 12 installer successfully
+- a fresh blank prefix can install the official Reason Companion installer successfully
+- the official Reason installer lays down the shared resources and stock soundbanks required for startup
+- Reason can reach a usable UI on Linux under the known-good setup
+
+Known limitations:
+- Reason may still show a misleading Companion error even when startup succeeds
+- Companion itself is not fully healthy under Wine
+- first-launch auth and account-handshake behavior still need more validation from a fully fresh end-user path
+- this repository is not yet a finished Bottles-native export
+
+## Repository Layout
+
+Top-level files:
+- `README.md`: project overview and usage notes
+- `STATE.txt`: concise technical state summary
+- `install-kit.sh`: installs the reusable kit into a target root
+- `bootstrap-prefix.sh`: creates and initializes a fresh Wine prefix
+- `archive-commands.sh`: example commands for rebuilding release artifacts
+- `RELEASE-ASSETS.md`: what should ship as release assets instead of git-tracked files
+- `SHA256SUMS`: checksums for published binary artifacts
+
+Directories:
+- `export/`: launcher scripts and desktop-entry templates
+- `bottle/`: notes and helper scripts for Bottles-related workflows
+
+Release asset kept out of git:
+- `wine-11.6.tar.zst`
 
 ## Canonical Runtime
 
+The reference layout expected by this kit is:
 - Wine runner: `<INSTALL_ROOT>/opt/wine-11.6`
 - Prefix: `<INSTALL_ROOT>/.wine-reason12-116`
 - Main launcher: `<INSTALL_ROOT>/bin/reason12-menufix`
 - Companion wrapper: `<INSTALL_ROOT>/bin/reason-companion-url-116`
-- Host rslaunch handler desktop file:
-  `<XDG_DATA_HOME>/applications/reason-companion-rslaunch.desktop`
+- Host `rslaunch` handler: `<XDG_DATA_HOME>/applications/reason-companion-rslaunch.desktop`
 
-## Why This Is Not A Real Bottle Yet
+## Installation Flow
 
-The setup still depends on host-side integration outside a bottle:
-- custom source-built Wine
-- custom launch scripts in `~/bin`
-- host `x-scheme-handler/rslaunch`
-- Companion startup behavior under Wine
+Typical use on another Linux machine:
+1. Download or clone this repository.
+2. Download the published release asset `wine-11.6.tar.zst` and place it in the repository root.
+3. Obtain the official Reason 12 installer and the official Reason Companion installer.
+4. Run `./install-kit.sh [target-root]`.
+5. Run `./bootstrap-prefix.sh [target-root]`.
+6. Install Reason and Reason Companion into the created prefix using the official installers.
+7. Launch Reason from the generated desktop entry or the installed launcher script.
 
-A Bottles export would need either:
-1. a Bottles runner compatible with this exact behavior, plus bottle-local startup hooks, or
-2. a setup script that recreates the host integration after import
+## What This Repository Does Not Ship
 
-## First-Launch Concern
+This repository intentionally does not redistribute:
+- Reason installers
+- licenses or entitlements
+- user account state
+- private prefixes
+- private logs
+- any bundled user-specific data
 
-The original install blocker is no longer the installer path.
+## Why This Is Not Yet A Final Bottle
 
-A clean blank prefix now installs correctly from the official:
-- `Reason_1274_d3-Stable-820-Win.zip`
-- `ReasonCompanion-3.0.18-win.exe`
+A fully portable Bottles export still needs more work.
 
-The remaining redistribution risk is first launch after install.
+The current working setup depends on Linux-host integration outside a bottle:
+- a custom source-built Wine runner
+- launcher scripts on the host filesystem
+- a host `rslaunch` URL handler
+- Companion behavior that remains somewhat fragile under Wine
 
-Reason/Companion still appear to rely on:
-- browser/account callback flow
-- `rslaunch:` handoff
-- Companion startup behavior under Wine
+That means this project is better described today as a reproducible Linux install kit than as a finished, one-click Bottles package.
 
-So while the current setup can work locally, I would not package it yet as:
-"import this bottle and everything including Companion/account/device workflows works"
+## Recommended Next Work
 
-That would be overstating the current state.
-
-## Public vs Private
-
-Public here:
-- source-built `wine-11.6` WoW64 archive
-- launcher scripts and desktop integration
-- installer/bootstrap scripts and notes
-
-Private elsewhere:
-- archived live prefix with entitlement/account state
-- debug logs
-- downloaded installers
-
-## What We Do Have Enough For
-
-We do have enough for a reproducible local project package:
-- document the exact runner and prefix
-- archive the built Wine tree
-- keep the wrapper scripts and desktop integration
-
-That is enough to reproduce the non-private side of the setup on a similar machine.
-
-## Drop-In Use
-
-This repository is now usable as a drop-in kit.
-
-Main entry points:
-- `install-kit.sh`
-- `bootstrap-prefix.sh`
-
-Typical flow on another machine:
-1. unpack the repository contents
-2. run `./install-kit.sh [target-root]`
-3. run `./bootstrap-prefix.sh [target-root]`
-4. install the official Reason 12 and Reason Companion installers into the
-   created prefix
-5. launch from the installed desktop entry
-
-This is still not a one-click final bottle, but it is now a real reusable kit.
-
-## Important Paths Inside The Prefix
-
-- Reason install:
-  `<PREFIX>/drive_c/Program Files/Propellerhead/Reason 12`
-- Companion install:
-  `<PREFIX>/drive_c/users/<WINDOWS_USER>/AppData/Local/Programs/reason-companion-app`
-- Shared resources:
-  `<PREFIX>/drive_c/ProgramData/Propellerhead Software/SharedResources/Reason`
-- Factory soundbanks:
-  `<PREFIX>/drive_c/ProgramData/Propellerhead Software/Soundbanks`
-
-## Recommendation
-
-Package this next as a restoreable setup with a verified installer path, not as a polished Bottle.
-
-If we want a real deliverable for others, the remaining work should focus on:
-- removing the lingering Companion error dialog
-- validating first-launch auth flow from a fresh prefix
-- deciding whether Companion must be fully interactive or only good enough for Reason startup
+The remaining high-value improvements are:
+- remove the lingering false Companion error path
+- validate first-launch auth from a completely fresh end-user setup
+- reduce host-side integration requirements where possible
+- decide whether Companion must be fully interactive, or only reliable enough to support Reason startup

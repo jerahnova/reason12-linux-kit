@@ -1,43 +1,23 @@
-# Reason 12 Bottles Handoff
+# Bottles Notes
 
-This directory contains the current Bottles-oriented handoff for the working
-Reason 12 + source-built Wine 11.6 setup.
+This directory contains Bottles-oriented notes and helper scripts for the Reason 12 Linux/Wine kit.
 
-It is not a final portable Bottle export yet.
+It should be treated as exploratory support material, not as a finished Bottles distribution.
 
-What it gives you:
-- a way to register the local `wine-11.6` tree for Bottles use
-- a way to restore the private working prefix to an importable location
-- the launch wrappers and desktop files already proven on this machine
-- a drop-in public install/bootstrap kit for non-private deployment
+## What It Covers
 
-What it does not guarantee yet:
-- a pristine first-launch Companion flow on a new machine
-- a share-safe full archive, because the live prefix contains private data
-- a Bottles-native `bottle.yml` generated directly from a real bottle instance
+- registering a local Wine runner for Bottles bookkeeping
+- restoring a local prefix into an importable location
+- documenting the current gap between the known-good host setup and a true Bottles-native package
 
-## Files
+## What It Does Not Yet Guarantee
+
+- a polished first-launch Companion flow inside Bottles
+- a Bottles-native package generated from a finalized bottle configuration
+- elimination of the current host-side integration requirements
+
+## Included Files
 
 - `register-local-runner.sh`
 - `restore-private-prefix.sh`
 - `BOTTLES-NOTES.md`
-
-## Intended Flow
-
-1. Register the local Wine runner for Bottles bookkeeping.
-2. Restore the private prefix archive to an importable location.
-3. Open Bottles and use Import/Export -> Importer -> Refresh.
-4. Import the restored prefix.
-5. Re-apply the known-good launch wrappers and `rslaunch` integration if needed.
-
-## Why This Approach
-
-Official Bottles docs say:
-- config backups are based on the `bottle.yml` in a bottle root
-- full backups include all personal files
-- Bottles can also import wineprefixes from other managers
-
-Sources:
-- https://docs.usebottles.com/bottles/backups
-- https://docs.usebottles.com/bottles/import-from-other-managers
-- https://docs.usebottles.com/advanced/cli
