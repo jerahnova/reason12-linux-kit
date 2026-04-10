@@ -14,7 +14,8 @@ tar -C "${TARGET_ROOT}" -xaf "${PROJECT_ROOT}/wine-11.6.tar.zst"
 echo "Installing launcher scripts ..."
 cp -f "${PROJECT_ROOT}/export/reason12-menufix" "${TARGET_ROOT}/bin/"
 cp -f "${PROJECT_ROOT}/export/reason-companion-url-116" "${TARGET_ROOT}/bin/"
-chmod +x "${TARGET_ROOT}/bin/reason12-menufix" "${TARGET_ROOT}/bin/reason-companion-url-116"
+cp -f "${PROJECT_ROOT}/export/reason-window-fix-116" "${TARGET_ROOT}/bin/"
+chmod +x "${TARGET_ROOT}/bin/reason12-menufix" "${TARGET_ROOT}/bin/reason-companion-url-116" "${TARGET_ROOT}/bin/reason-window-fix-116"
 
 render_template() {
   local src="$1"
@@ -39,6 +40,7 @@ Created:
   ${TARGET_ROOT}/opt/wine-11.6
   ${TARGET_ROOT}/bin/reason12-menufix
   ${TARGET_ROOT}/bin/reason-companion-url-116
+  ${TARGET_ROOT}/bin/reason-window-fix-116
   ${DESKTOP_DIR}/Reason 12.desktop
   ${DESKTOP_DIR}/Reason 12 Wine 11.desktop
   ${XDG_APPS_DIR}/reason-companion-rslaunch.desktop

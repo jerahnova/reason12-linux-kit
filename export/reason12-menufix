@@ -17,6 +17,7 @@ export WINEDEBUG="${WINEDEBUG:--all}"
 
 nohup "$BIN_DIR/reason-companion-url-116" >/tmp/reason-companion-116.log 2>&1 &
 sleep 3
+nohup "$BIN_DIR/reason-window-fix-116" >/tmp/reason-window-fix-116.log 2>&1 &
 
 win_args=()
 for arg in "$@"; do

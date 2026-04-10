@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Pull Reason child windows back onto a visible monitor if Wine places them
+# absurdly far offscreen when detaching panels.
+
+virtual_width=$(xrandr --query 2>/dev/null | awk '/current / {print $8; exit}')
+virtual_height=$(xrandr --query 2>/dev/null | awk '/current / {print $10; exit}')
+
+if [ -z "${virtual_width:-}" ] || [ -z "${virtual_height:-}" ]; then
+  exit 0
+fi
+
+deadline=$((SECONDS + 7200))
+seen_file="${XDG_RUNTIME_DIR:-/tmp}/reason-window-fix-116.seen"
+: >"$seen_file"
+
+while [ "$SECONDS" -lt "$deadline" ]; do
+  if ! pgrep -f 'C:\\Program Files\\Propellerhead\\Reason 12\\Reason.exe' >/dev/null 2>&1; then
+    sleep 1
+    continue
+  fi
+
+  while read -r wid desktop x y w h host title; do
+    [ -n "${wid:-}" ] || continue
+    [ "${w:-0}" -ge 50 ] || continue
+    [ "${h:-0}" -ge 20 ] || continue
+
+    # Pull only truly absurd placements back. Normal second-monitor placement
+    # remains untouched.
+    if [ "$x" -lt -1000 ] || [ "$y" -lt -500 ] || [ "$x" -gt $((virtual_width + 500)) ] || [ "$y" -gt $((virtual_height + 500)) ]; then
+      if ! grep -q "^$wid$" "$seen_file"; then
+        target_x=80
+        target_y=80
+        if [ "$virtual_width" -gt 1920 ]; then
+          target_x=$((virtual_width / 2 + 80))
+        fi
+        wmctrl -i -r "$wid" -e "0,$target_x,$target_y,-1,-1" >/dev/null 2>&1 || true
+        printf '%s\n' "$wid" >>"$seen_file"
+      fi
+    fi
+  done < <(wmctrl -lGx 2>/dev/null | awk '$3 ~ /reason\.exe\.reason\.exe/ {print}')
+
+  sleep 1
+done
